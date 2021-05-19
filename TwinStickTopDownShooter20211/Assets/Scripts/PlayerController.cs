@@ -9,46 +9,53 @@ public class PlayerController : Rigidbody2DBase
 
     public GameObject bulletPrefab;
 
-    [SerializeField]
-    private Transform bulletRespawn;
-
-    
-
     private float speed = 2f;
 
     public float Horizontal { get; protected set; }
     public float Vertical { get; protected set; }
     public bool Fire { get; protected set; }
+    public bool Reload { get; protected set; }
 
-    private bool FindTransform(Transform tf)
-    {
-        return tf.name.Contains("BulletRespawn");
-    }
+    [SerializeField]
+    private int weaponIndex = 0;
+    public Weapon CurrentWeapon { get { return weapons[weaponIndex]; } }
+
+    [SerializeField]
+    private List<Weapon> weapons = new List<Weapon>();
 
     protected override void Awake()
     {
         base.Awake();
 
-        //List<Transform> transforms = new List<Transform>(GetComponentsInChildren<Transform>());
-        //bulletRespawn = transforms.Find(FindTransform);
-        bulletRespawn = tf.Find("BulletRespawn");
+        weapons.AddRange(GetComponentsInChildren<Weapon>());
+
+
     }
-    public void SetInput(float horizontal, float vertical, bool fire)
+    public void SetInput(float horizontal, float vertical, bool fire, bool reload)
     {
         Horizontal = horizontal;
         Vertical = vertical;
         Fire = fire;
+        Reload = reload;
     }
 
     private void Update()
     {
         if(Fire)
         {
-            Vector3 rotation = bulletRespawn.rotation.eulerAngles;
+            CurrentWeapon.Fire();
 
-            Factory.GetObject("bullet", bulletRespawn.position, Quaternion.Euler(rotation.x,rotation.y,rotation.z - 10));
-            Factory.GetObject("bullet", bulletRespawn.position, bulletRespawn.rotation);
-            Factory.GetObject("bullet", bulletRespawn.position, Quaternion.Euler(rotation.x, rotation.y, rotation.z + 10));
+            //Vector3 rotation = bulletRespawn.rotation.eulerAngles;
+            //Factory.GetObject("bullet", bulletRespawn.position, bulletRespawn.rotation);
+
+            //Factory.GetObject("bullet", bulletRespawn.position, Quaternion.Euler(rotation.x,rotation.y,rotation.z - 10));
+
+            //Factory.GetObject("bullet", bulletRespawn.position, Quaternion.Euler(rotation.x, rotation.y, rotation.z + 10));
+        }
+
+        if(Reload)
+        {
+            CurrentWeapon.Reload();
         }
     }
 

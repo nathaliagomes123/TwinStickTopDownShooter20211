@@ -27,6 +27,7 @@ public class FactoryController : MonoBehaviour
         for (int i = 0; i < count; i++)
         {
             GameObject go = Instantiate(prefab, parent.transform);
+            go.name = key + "_" + i;
             IPoolableObject obj = go.GetComponent<IPoolableObject>();
             obj.Recycle();
             queue.Enqueue(go);

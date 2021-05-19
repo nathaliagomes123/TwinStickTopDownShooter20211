@@ -7,6 +7,7 @@ public class BulletController : Rigidbody2DBase, IPoolableObject
 {
     private float speed = 5f;
     private float distance = 2f;
+    private int damage;
     private Vector2 startPosition;
 
     public void Recycle()
@@ -17,6 +18,7 @@ public class BulletController : Rigidbody2DBase, IPoolableObject
     public void TurnOn()
     {
         gameObject.SetActive(true);
+        Start();
     }
 
     private void Start()
@@ -25,10 +27,19 @@ public class BulletController : Rigidbody2DBase, IPoolableObject
         rb.velocity = tf.up * speed;
     }
 
+    public void Init(WeaponDTO wdto)
+    {
+        damage = wdto.Damage;
+        distance = wdto.Distance;
+        speed = wdto.BulletSpeed;
+        Start();
+    }
+
     private void Update()
     {
         if(Vector2.Distance(startPosition,tf.position) >= distance)
         {
+            Debug.Log(gameObject.name);
             Factory.Recycle("bullet", gameObject);
         }
     }

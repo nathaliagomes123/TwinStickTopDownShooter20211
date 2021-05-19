@@ -9,6 +9,6 @@ public class GameController : MonoBehaviour
 
     private void Awake()
     {
-        Factory.Register("bullet", BulletPrefab, 10);
+        Factory.Register("bullet", BulletPrefab, 20);
     }
 }

@@ -11,6 +11,8 @@ public class InputController : MonoBehaviour
     [SerializeField]
     private bool Fire;
     [SerializeField]
+    private bool Reload;
+    [SerializeField]
     private PlayerController player;
 
     private void Awake()
@@ -24,9 +26,10 @@ public class InputController : MonoBehaviour
         Horizontal = Input.GetAxis("Horizontal");
         Vertical = Input.GetAxis("Vertical");
 
-        Fire = Input.GetMouseButtonDown(0);
-        
+        Fire = Input.GetMouseButton(0);
+        Reload = Input.GetMouseButton(1);
 
-        player.SetInput(Horizontal, Vertical, Fire);
+
+        player.SetInput(Horizontal, Vertical, Fire, Reload);
     }
 }
