@@ -16,7 +16,7 @@ MonoBehaviour:
   Ammo: 6
   AmmoMax: 6
   Damage: 10
-  FireRate: 1
+  FireRate: 0.5
   ReloadSpeed: 3
-  BulletSpeed: 5
+  BulletSpeed: 10
   Distance: 4
