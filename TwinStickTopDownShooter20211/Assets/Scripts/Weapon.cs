@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Factory = FactoryController;
 
+public enum WeaponType { None, Pistol, Shotgun, MachineGun, Sniper, RocketLauncher }
+
 public class Weapon : MonoBehaviour
 {
     public string Name { get; protected set; }
@@ -13,6 +15,7 @@ public class Weapon : MonoBehaviour
     public float ReloadSpeed { get; protected set; }
     public float BulletSpeed { get; protected set; }
     public float Distance { get; protected set; }
+    public WeaponType Type { get; protected set; }
 
     public WeaponDTO weaponDTO;
 
@@ -28,7 +31,7 @@ public class Weapon : MonoBehaviour
     [SerializeField]
     protected Transform bulletRespawn;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         bulletRespawn = transform.Find("BulletRespawn");
 
@@ -56,11 +59,16 @@ public class Weapon : MonoBehaviour
     {
         if(CanFire)
         {
-            GameObject go = Factory.GetObject("bullet", bulletRespawn.position, bulletRespawn.rotation);
-            BulletController bullet = go.GetComponent<BulletController>();
-            bullet.Init(weaponDTO);
+            CreateProjectile();
             StartCoroutine(FireCooldown());
         }
+    }
+
+    protected virtual void CreateProjectile()
+    {
+        GameObject go = Factory.GetObject("bullet", bulletRespawn.position, bulletRespawn.rotation);
+        BulletController bullet = go.GetComponent<BulletController>();
+        bullet.Init(weaponDTO);
     }
 
     private IEnumerator FireCooldown()
