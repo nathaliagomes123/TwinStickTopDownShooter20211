@@ -44,9 +44,15 @@ public class PlayerController : Rigidbody2DBase
         base.Awake();
 
         weapons.AddRange(GetComponentsInChildren<Weapon>(true));
+        WeaponIndex = 0;
         CurrentWeapon.gameObject.SetActive(true);
-
     }
+
+    protected virtual void Start()
+    {
+        GameEvents.WeaponFireEvent.Invoke(CurrentWeapon.weaponDTO.Ammo, CurrentWeapon.weaponDTO.AmmoMax);
+    }
+
     public void SetInput(float horizontal, float vertical, Vector3 mousePosition, int selectWeapon, bool fire, bool reload)
     {
         Horizontal = horizontal;

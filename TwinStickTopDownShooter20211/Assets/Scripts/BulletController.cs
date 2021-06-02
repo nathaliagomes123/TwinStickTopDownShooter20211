@@ -35,6 +35,14 @@ public class BulletController : Rigidbody2DBase, IPoolableObject
         Start();
     }
 
+    public void Init(MachineGunDTO mdto)
+    {
+        damage = mdto.Damage;
+        speed = mdto.BulletSpeed;
+        distance = Random.Range(mdto.Distance - mdto.DeltaDistance, mdto.Distance + mdto.DeltaDistance);
+        Start();
+    }
+
     private void Update()
     {
         if(Vector2.Distance(startPosition,tf.position) >= distance)

@@ -55,6 +55,10 @@ public class InputController : MonoBehaviour
         {
             SelectWeapon = 3;
         }
+        else if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            SelectWeapon = 4;
+        }
 
         if(Input.GetKeyDown(KeyCode.E))
         {
@@ -67,5 +71,6 @@ public class InputController : MonoBehaviour
 
 
         player.SetInput(Horizontal, Vertical, MousePosition, SelectWeapon, Fire, Reload);
+
     }
 }

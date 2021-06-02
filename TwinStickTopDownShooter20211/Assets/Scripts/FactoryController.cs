@@ -16,6 +16,12 @@ public class FactoryController : MonoBehaviour
 
     }
 
+    static public void Clear()
+    {
+        register.Clear();
+        pool.Clear();
+    }
+
     static public void Register(string key, GameObject prefab, int count)
     {
         register.Add(key, prefab);

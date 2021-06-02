@@ -75,6 +75,7 @@ public class Weapon : MonoBehaviour
     {
         isFiring = true;
         Ammo--;
+        GameEvents.WeaponFireEvent.Invoke(Ammo, AmmoMax);
         yield return new WaitForSeconds(FireRate);
         isFiring = false;
     }
@@ -91,9 +92,11 @@ public class Weapon : MonoBehaviour
     {
         Debug.Log("Begin Reload");
         isReloading = true;
+        GameEvents.WeaponReloadEvent.Invoke(ReloadSpeed);
         yield return new WaitForSeconds(ReloadSpeed);
         Ammo = AmmoMax;
         isReloading = false;
+        GameEvents.WeaponFireEvent.Invoke(Ammo, AmmoMax);
         Debug.Log("End Reload");
     }
 
