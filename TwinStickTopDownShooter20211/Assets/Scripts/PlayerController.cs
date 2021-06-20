@@ -11,6 +11,12 @@ public class PlayerController : Rigidbody2DBase
 
     private float speed = 2f;
 
+
+    public Char player = new Char();
+
+    public float damage;
+    public float health; 
+
     public float Horizontal { get; protected set; }
     public float Vertical { get; protected set; }
     public Vector3 MousePosition { get; protected set; }
@@ -48,9 +54,12 @@ public class PlayerController : Rigidbody2DBase
         CurrentWeapon.gameObject.SetActive(true);
     }
 
-    protected virtual void Start()
-    {
+    protected virtual void Start() 
+    {      
         GameEvents.WeaponFireEvent.Invoke(CurrentWeapon.weaponDTO.Ammo, CurrentWeapon.weaponDTO.AmmoMax);
+
+        player.life = 100f;
+        player.isAlive = true;
     }
 
     public void SetInput(float horizontal, float vertical, Vector3 mousePosition, int selectWeapon, bool fire, bool reload)
@@ -62,9 +71,24 @@ public class PlayerController : Rigidbody2DBase
         Fire = fire;
         Reload = reload;
     }
+   
+    /////variaveis de incremento e decremento de vidas do jogador/////
+    public void Damage() 
+    {
+        player.life = player.DecrementLife(damage);
+        Debug.Log(player.life);
+    }
+
+    public void Health()
+    {
+        player.life = player.IncrementLife(health);
+        Debug.Log(player.life);
+    }
+    /////////////////////////////////////////////
 
     private void Update()
     {
+
         if(Fire)
         {
             CurrentWeapon.Fire();
